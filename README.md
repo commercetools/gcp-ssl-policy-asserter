@@ -9,6 +9,10 @@ Google load balancer project.
 | GOOGLE_PROJECT   | Google Project _ID_  to manage HTTPSProxies for |
 | GOOGLE_APPLICATION_CREDENTIALS | Path to Google Auth file. More info [here](https://cloud.google.com/docs/authentication/getting-started) |
 
+| YAML Property | Function |
+| --------- | --------- |
+| ignoreProxies[] | If an HTTPSProxy uses a URLMap within this list the SSLPolicy will not be asserted |
+
 ## IAM Permissions
 
 ```

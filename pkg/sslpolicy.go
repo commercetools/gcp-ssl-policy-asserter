@@ -11,18 +11,18 @@ import (
 
 // NewSslPolicy returns instance of the configuration options
 // necessary to create our globally enforced SSL Policy.
-func NewSslPolicy() compute.SslPolicy {
+func NewSslPolicy(name string) compute.SslPolicy {
 	return compute.SslPolicy{
 		Description:   "Commercetools TLS policy: modern features and TLS 1.2 only.",
-		Name:          PolicyName(),
+		Name:          name,
 		Profile:       "MODERN",
 		MinTlsVersion: "TLS_1_2",
 	}
 }
 
-func pollOperationStatus(project string, svc *compute.Service, operation *compute.Operation) error {
+func pollOperationStatus(config *Config, svc *compute.Service, operation *compute.Operation) error {
 	operSvc := compute.NewGlobalOperationsService(svc)
-	statusCall := operSvc.Get(project, operation.Name)
+	statusCall := operSvc.Get(config.Project(), operation.Name)
 	operation, _ = statusCall.Do()
 
 	for timeout := time.After(10 * time.Second); operation.Status != "DONE"; {
@@ -31,20 +31,20 @@ func pollOperationStatus(project string, svc *compute.Service, operation *comput
 			return errors.New("polling SSLPolicy creation operation timed out")
 		default:
 			time.Sleep(2 * time.Second)
-			statusCall := operSvc.Get(project, operation.Name)
+			statusCall := operSvc.Get(config.Project(), operation.Name)
 			var err error
 			operation, err = statusCall.Do()
 
 			if err != nil {
 				return err
 			}
-			log.Printf("STATUS: create %s is %s", PolicyName(), operation.Status)
+			log.Printf("STATUS: create %s is %s", config.PolicyName(), operation.Status)
 		}
 	}
 	return nil
 }
 
-func pollSSLPolicy(project string, policySvc *compute.SslPoliciesService) (*compute.SslPolicy, error) {
+func pollSSLPolicy(config *Config, policySvc *compute.SslPoliciesService) (*compute.SslPolicy, error) {
 	var (
 		currPolicy *compute.SslPolicy
 		err        error
@@ -54,14 +54,14 @@ func pollSSLPolicy(project string, policySvc *compute.SslPoliciesService) (*comp
 		case <-timeout:
 			return nil, errors.New("polling SSL Policy timed out")
 		default:
-			getPolicyCall := policySvc.Get(project, PolicyName())
+			getPolicyCall := policySvc.Get(config.Project(), config.PolicyName())
 			currPolicy, err = getPolicyCall.Do()
 
 			if err == nil {
-				log.Printf("SSLPolicy %s exists", PolicyName())
+				log.Printf("SSLPolicy %s exists", config.PolicyName())
 				return currPolicy, nil
 			}
-			log.Printf("Polling %s status: %d", PolicyName(), err.(*googleapi.Error).Code)
+			log.Printf("Polling %s status: %d", config.PolicyName(), err.(*googleapi.Error).Code)
 			time.Sleep(1 * time.Second)
 		}
 	}
@@ -69,10 +69,10 @@ func pollSSLPolicy(project string, policySvc *compute.SslPoliciesService) (*comp
 
 // AssertPolicy ensures that a policy exists
 // that matches our expectations.
-func AssertPolicy(project string, svc *compute.Service) (*compute.SslPolicy, error) {
+func AssertPolicy(config *Config, svc *compute.Service) (*compute.SslPolicy, error) {
 	policySvc := compute.NewSslPoliciesService(svc)
 
-	getPolicyCall := policySvc.Get(project, PolicyName())
+	getPolicyCall := policySvc.Get(config.Project(), config.PolicyName())
 	currPolicy, err := getPolicyCall.Do()
 
 	switch err.(type) {
@@ -81,9 +81,9 @@ func AssertPolicy(project string, svc *compute.Service) (*compute.SslPolicy, err
 			// Clean out the old error from above.
 			// := causes variable shadowing on err
 			err = nil
-			log.Printf("SSLPolicy %s not found, creating...", PolicyName())
-			sslPolicy := NewSslPolicy()
-			createPolicyCall := policySvc.Insert(project, &sslPolicy)
+			log.Printf("SSLPolicy %s not found, creating...", config.PolicyName())
+			sslPolicy := NewSslPolicy(config.PolicyName())
+			createPolicyCall := policySvc.Insert(config.Project(), &sslPolicy)
 			operation, err := createPolicyCall.Do()
 			if err != nil {
 				return nil, err
@@ -93,13 +93,13 @@ func AssertPolicy(project string, svc *compute.Service) (*compute.SslPolicy, err
 				log.Printf("WARNING: %s", warning.Message)
 			}
 
-			err = pollOperationStatus(project, svc, operation)
+			err = pollOperationStatus(config, svc, operation)
 
 			if err != nil {
 				log.Fatalf("Create SSLPolicy operation failed: %v", err)
 			}
 
-			currPolicy, err = pollSSLPolicy(project, policySvc)
+			currPolicy, err = pollSSLPolicy(config, policySvc)
 
 			if err != nil {
 				log.Fatalf("Could not find SSLPolicy after creation: %v", err)

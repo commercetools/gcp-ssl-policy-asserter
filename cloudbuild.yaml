@@ -1,6 +1,6 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/atlas-logs-exporter:0.3', '-t', 'gcr.io/$PROJECT_ID/atlas-logs-exporter:latest', './atlas-logs-exporter' ]
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/sslpolicy-asserter:1.2', '-t', 'gcr.io/$PROJECT_ID/sslpolicy-asserter:latest', './sslpolicy-asserter' ]
 images:
-- 'gcr.io/$PROJECT_ID/atlas-logs-exporter:0.3'
-- 'gcr.io/$PROJECT_ID/atlas-logs-exporter:latest'
+- 'gcr.io/$PROJECT_ID/sslpolicy-asserter:1.2'
+- 'gcr.io/$PROJECT_ID/sslpolicy-asserter:latest'

@@ -5,7 +5,7 @@ Google load balancer project.
 
 | Environment Variable | Function |
 | ---------- | ------- |
-| SSL_POLICY_NAME  | Given a name will assert a Policy with that name exists. Hardcoded to minimum TLS 1.2 and MODERN profile |
+| SSL_POLICY_NAME  | Given a name will assert a Policy with that name exists. Hardcoded to minimum TLS 1.2 and RESTRICTED profile |
 | GOOGLE_PROJECT   | Google Project _ID_  to manage HTTPSProxies for |
 | GOOGLE_APPLICATION_CREDENTIALS | Path to Google Auth file. More info [here](https://cloud.google.com/docs/authentication/getting-started) |
 

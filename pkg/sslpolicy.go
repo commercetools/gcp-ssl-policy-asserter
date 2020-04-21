@@ -13,9 +13,9 @@ import (
 // necessary to create our globally enforced SSL Policy.
 func NewSslPolicy(name string) compute.SslPolicy {
 	return compute.SslPolicy{
-		Description:   "Commercetools TLS policy: modern features and TLS 1.2 only.",
+		Description:   "Commercetools TLS policy: restricted features and above TLS 1.2 only.",
 		Name:          name,
-		Profile:       "MODERN",
+		Profile:       "RESTRICTED",
 		MinTlsVersion: "TLS_1_2",
 	}
 }

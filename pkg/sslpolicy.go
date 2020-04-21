@@ -13,10 +13,10 @@ import (
 // necessary to create our globally enforced SSL Policy.
 func NewSslPolicy(name string) compute.SslPolicy {
 	return compute.SslPolicy{
-		Description:   "Commercetools TLS policy: restricted features and above TLS 1.2 only.",
+		Description:   fmt.Printf("Commercetools TLS policy: %s features and above TLS %s only.", config.SslProfile(), config.TlsVersion()),
 		Name:          name,
-		Profile:       "RESTRICTED",
-		MinTlsVersion: "TLS_1_2",
+		Profile:       config.SslProfile(),
+		MinTlsVersion: config.TlsVersion(),
 	}
 }
 

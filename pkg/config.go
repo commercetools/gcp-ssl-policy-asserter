@@ -39,6 +39,21 @@ func (*Config) Project() string {
 	return os.Getenv("GOOGLE_PROJECT")
 }
 
+// TlsVersion will be used current TLS Policy
+// by this value. The acceptable value MUST BE TLS 1.0/1.1/1.2/1.3
+// Note that the TLS 1.3 supports `TLS_AES_128_GCM_SHA256`,
+// `TLS_AES_256_GCM_SHA384` and `TLS_CHACHA20_POLY1305_SHA256` ciphers only.
+func (*Config) TlsVersion() string {
+	return os.Getenv("MIN_TLS_VERSION")
+}
+
+// SslProfile returns the string value of pre-configured profile
+// defined by GCP. The acceptable value MUST BE one of these values
+// COMPATIBLE/MODERN/RESTRICTED
+func (*Config) SslProfile() string {
+	return os.Getenv("SSL_PROFILE")
+}
+
 // listToContainsMap converts a list of strings
 // into a map that will be used for "contains" checking.
 func listToContainsMap(x []string) (result map[string]struct{}) {

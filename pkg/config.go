@@ -45,13 +45,12 @@ func (*Config) Project() string {
 // `TLS_AES_256_GCM_SHA384` and `TLS_CHACHA20_POLY1305_SHA256` ciphers only.
 // Default is "TLS_1_2"
 func (*Config) TlsVersion() string {
-	allow_vals := []string{ "TLS_1_0", "TLS_1_1", "TLS_1_2", "TLS_1_3"}
-	for _, val := range allow_vals {
-        if os.Getenv("MIN_TLS_VERSION") != val || os.Getenv("MIN_TLS_VERSION") == "" {
-          fmt.Println("Input TLS version is not supported")
-					return "TLS_1_2"
-        }
-    }
+	tlsVersions := []string{"TLS_1_0", "TLS_1_1", "TLS_1_2", "TLS_1_3"}
+	for _, ver := range tlsVersions {
+		if os.Getenv("MIN_TLS_VERSION") != ver || os.Getenv("MIN_TLS_VERSION") == "" {
+			return "TLS_1_2"
+		}
+	}
 	return os.Getenv("MIN_TLS_VERSION")
 }
 
@@ -60,13 +59,12 @@ func (*Config) TlsVersion() string {
 // COMPATIBLE/MODERN/RESTRICTED. We have not suppoerted CUSTOM value yet
 // Default is "MODERN"
 func (*Config) SslProfile() string {
-	allow_vals := []string{ "COMPATIBLE", "MODERN", "RESTRICTED"}
-	for _, val := range allow_vals {
-        if os.Getenv("SSL_PROFILE") != val || os.Getenv("SSL_PROFILE") == "" {
-          fmt.Println("Input SSL profile type is not supported")
-					return "MODERN"
-        }
-    }
+	sslProfiles := []string{"COMPATIBLE", "MODERN", "RESTRICTED"}
+	for _, profile := range sslProfiles {
+		if os.Getenv("SSL_PROFILE") != profile || os.Getenv("SSL_PROFILE") == "" {
+			return "MODERN"
+		}
+	}
 	return os.Getenv("SSL_PROFILE")
 }
 

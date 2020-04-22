@@ -40,12 +40,12 @@ func (*Config) Project() string {
 }
 
 // TlsVersion will be used current TLS Policy
-// by this value. The acceptable value MUST BE TLS 1.0/1.1/1.2/1.3
+// by this value. The acceptable value MUST BE TLS 1.1/1.2/1.3
 // Note that the TLS 1.3 supports `TLS_AES_128_GCM_SHA256`,
 // `TLS_AES_256_GCM_SHA384` and `TLS_CHACHA20_POLY1305_SHA256` ciphers only.
 // Default is "TLS_1_2"
 func (*Config) TlsVersion() string {
-	tlsVersions := []string{"TLS_1_0", "TLS_1_1", "TLS_1_2", "TLS_1_3"}
+	tlsVersions := []string{"TLS_1_1", "TLS_1_2", "TLS_1_3"}
 	for _, ver := range tlsVersions {
 		if os.Getenv("MIN_TLS_VERSION") != ver || os.Getenv("MIN_TLS_VERSION") == "" {
 			return "TLS_1_2"

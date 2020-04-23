@@ -5,9 +5,11 @@ Google load balancer project.
 
 | Environment Variable | Function |
 | ---------- | ------- |
-| SSL_POLICY_NAME  | Given a name will assert a Policy with that name exists. Hardcoded to minimum TLS 1.2 and RESTRICTED profile |
+| SSL_POLICY_NAME  | Given a name will assert a Policy with that name exists  |
 | GOOGLE_PROJECT   | Google Project _ID_  to manage HTTPSProxies for |
 | GOOGLE_APPLICATION_CREDENTIALS | Path to Google Auth file. More info [here](https://cloud.google.com/docs/authentication/getting-started) |
+| MIN_TLS_VERSION  | Minimum TLS version (default `TLS_1_2`). Only supports the higher than TLS 1.1 version   |
+| SSL_PROFILE      | SSL Profile type (default `MODERN`). Only supports the `COMPATIBLE`/`MODERN`/`RESTRCITED`  |
 
 | YAML Property | Function |
 | --------- | --------- |

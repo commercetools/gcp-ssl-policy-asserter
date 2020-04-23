@@ -39,10 +39,8 @@ func (*Config) Project() string {
 	return os.Getenv("GOOGLE_PROJECT")
 }
 
-// TlsVersion will be used current TLS Policy
-// by this value. The acceptable value MUST BE TLS 1.1/1.2/1.3
-// Note that the TLS 1.3 supports `TLS_AES_128_GCM_SHA256`,
-// `TLS_AES_256_GCM_SHA384` and `TLS_CHACHA20_POLY1305_SHA256` ciphers only.
+// TlsVersion will be used current TLS Policy by this value.
+// The acceptable value MUST BE either`TLS_1_1`/`TLS_1_2`/`TLS_1_3`
 // Default is "TLS_1_2"
 func (*Config) TlsVersion() string {
 	tlsVersions := []string{"TLS_1_1", "TLS_1_2", "TLS_1_3"}
@@ -54,9 +52,8 @@ func (*Config) TlsVersion() string {
 	return os.Getenv("MIN_TLS_VERSION")
 }
 
-// SslProfile returns the string value of pre-configured profile
-// defined by GCP. The acceptable value MUST BE one of these values
-// COMPATIBLE/MODERN/RESTRICTED. We have not suppoerted CUSTOM value yet
+// SslProfile returns the string value of pre-configured profile defined by GCP.
+// The acceptable value MUST BE either `COMPATIBLE`/`MODERN`/`RESTRICTED`.
 // Default is "MODERN"
 func (*Config) SslProfile() string {
 	sslProfiles := []string{"COMPATIBLE", "MODERN", "RESTRICTED"}

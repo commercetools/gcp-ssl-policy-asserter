@@ -2,6 +2,7 @@ package sslpolicy
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"time"
 
@@ -13,7 +14,7 @@ import (
 // necessary to create our globally enforced SSL Policy.
 func NewSslPolicy(name string) compute.SslPolicy {
 	return compute.SslPolicy{
-		Description:   fmt.Printf("Commercetools TLS policy: %s features and above TLS %s only.", config.SslProfile(), config.TlsVersion()),
+		Description:   fmt.Printf("TLS policy: %s features and above TLS %s only.", config.SslProfile(), config.TlsVersion()),
 		Name:          name,
 		Profile:       config.SslProfile(),
 		MinTlsVersion: config.TlsVersion(),

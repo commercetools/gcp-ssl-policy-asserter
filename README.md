@@ -15,6 +15,17 @@ Google load balancer project.
 | --------- | --------- |
 | ignoreProxies[] | If an HTTPSProxy uses a URLMap within this list the SSLPolicy will not be asserted |
 
+## Build and Deploy
+
+Refer to the Makefile. It has all the commands detailed and variables set.
+
+To publish a new version you should only have to do:
+
+`make publish`
+
+Deployed via k8s-manifest. Chart is located [here](https://github.com/commercetools/k8s-manifests/tree/master/charts/ssl-asserter).
+
+
 ## IAM Permissions
 
 ```

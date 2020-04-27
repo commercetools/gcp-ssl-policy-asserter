@@ -12,7 +12,7 @@ import (
 
 // NewSslPolicy returns instance of the configuration options
 // necessary to create our globally enforced SSL Policy.
-func NewSslPolicy(name string, profile string, version string) compute.SslPolicy {
+func NewSslPolicy(name, profile, version string) compute.SslPolicy {
 	return compute.SslPolicy{
 		Description:   fmt.Sprintf("TLS policy: %s features and above TLS %s only.", profile, version),
 		Name:          name,

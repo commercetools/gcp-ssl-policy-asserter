@@ -44,12 +44,13 @@ func (*Config) Project() string {
 // Default is "TLS_1_2"
 func (*Config) TlsVersion() string {
 	tlsVersions := []string{"TLS_1_1", "TLS_1_2", "TLS_1_3"}
+	inputVersion := os.Getenv("MIN_TLS_VERSION")
 	for _, ver := range tlsVersions {
-		if os.Getenv("MIN_TLS_VERSION") != ver || os.Getenv("MIN_TLS_VERSION") == "" {
+		if inputVersion != ver || inputVersion == "" {
 			return "TLS_1_2"
 		}
 	}
-	return os.Getenv("MIN_TLS_VERSION")
+	return inputVersion
 }
 
 // SslProfile returns the string value of pre-configured profile defined by GCP.
@@ -57,12 +58,13 @@ func (*Config) TlsVersion() string {
 // Default is "MODERN"
 func (*Config) SslProfile() string {
 	sslProfiles := []string{"COMPATIBLE", "MODERN", "RESTRICTED"}
+	inputProfile := os.Getenv("SSL_PROFILE")
 	for _, profile := range sslProfiles {
-		if os.Getenv("SSL_PROFILE") != profile || os.Getenv("SSL_PROFILE") == "" {
+		if inputProfile != profile || inputProfile == "" {
 			return "MODERN"
 		}
 	}
-	return os.Getenv("SSL_PROFILE")
+	return inputProfile
 }
 
 // listToContainsMap converts a list of strings

@@ -1,5 +1,5 @@
 CONTAINER_TAG ?= 1.2
-CONTAINER_REPO ?= ct-services
+CONTAINER_REPO ?= ct-images
 dev-build:
 	go build -o policy_asserter .
 build:
@@ -7,4 +7,4 @@ build:
 dockerize: build
 	docker build . --tag '$(CONTAINER_REPO)'/sslpolicy-asserter:'$(CONTAINER_TAG)'
 publish: dockerize
-	docker push '$(CONTAINER-REPO)'/sslpolicy-asserter:'$(CONTAINER_TAG)'
+	docker push '$(CONTAINER_REPO)'/sslpolicy-asserter:'$(CONTAINER_TAG)'

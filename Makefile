@@ -1,5 +1,5 @@
 CONTAINER_TAG ?= 1.3
-CONTAINER_REPO ?= gcr.io/ct-images
+CONTAINER_REPO ?= ct-images
 dev-build:
 	go build -o policy_asserter .
 build:

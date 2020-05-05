@@ -9,7 +9,7 @@ Google load balancer project.
 | GOOGLE_PROJECT   | Google Project _ID_  to manage HTTPSProxies for |
 | GOOGLE_APPLICATION_CREDENTIALS | Path to Google Auth file. More info [here](https://cloud.google.com/docs/authentication/getting-started) |
 | MIN_TLS_VERSION  | Minimum TLS version (default `TLS_1_2`). Only supports the higher than TLS 1.1 version   |
-| SSL_PROFILE      | SSL Profile type (default `MODERN`). Only supports the `COMPATIBLE`/`MODERN`/`RESTRCITED`  |
+| SSL_PROFILE      | SSL Profile type (default `MODERN`). Only supports the `COMPATIBLE`/`MODERN`/`RESTRICTED`  |
 
 | YAML Property | Function |
 | --------- | --------- |

@@ -2,6 +2,7 @@ package sslpolicy
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"time"
 
@@ -11,12 +12,12 @@ import (
 
 // NewSslPolicy returns instance of the configuration options
 // necessary to create our globally enforced SSL Policy.
-func NewSslPolicy(name string) compute.SslPolicy {
+func NewSslPolicy(name, profile, version string) compute.SslPolicy {
 	return compute.SslPolicy{
-		Description:   "Commercetools TLS policy: modern features and TLS 1.2 only.",
+		Description:   fmt.Sprintf("TLS policy: %s features and above TLS %s only.", profile, version),
 		Name:          name,
-		Profile:       "MODERN",
-		MinTlsVersion: "TLS_1_2",
+		Profile:       profile,
+		MinTlsVersion: version,
 	}
 }
 
@@ -82,7 +83,7 @@ func AssertPolicy(config *Config, svc *compute.Service) (*compute.SslPolicy, err
 			// := causes variable shadowing on err
 			err = nil
 			log.Printf("SSLPolicy %s not found, creating...", config.PolicyName())
-			sslPolicy := NewSslPolicy(config.PolicyName())
+			sslPolicy := NewSslPolicy(config.PolicyName(), config.SslProfile(), config.TlsVersion())
 			createPolicyCall := policySvc.Insert(config.Project(), &sslPolicy)
 			operation, err := createPolicyCall.Do()
 			if err != nil {

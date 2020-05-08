@@ -39,6 +39,38 @@ func (*Config) Project() string {
 	return os.Getenv("GOOGLE_PROJECT")
 }
 
+// TlsVersion will be used current TLS Policy by this value.
+// The acceptable value MUST BE either`TLS_1_1`/`TLS_1_2`/`TLS_1_3`
+// Default is "TLS_1_2"
+func (*Config) TlsVersion() string {
+	tlsVersions := []string{"TLS_1_1", "TLS_1_2", "TLS_1_3"}
+	inputVersion := os.Getenv("MIN_TLS_VERSION")
+	result := "TLS_1_2"
+	for _, ver := range tlsVersions {
+		if inputVersion == ver {
+			result = ver
+			break
+		}
+	}
+	return result
+}
+
+// SslProfile returns the string value of pre-configured profile defined by GCP.
+// The acceptable value MUST BE either `COMPATIBLE`/`MODERN`/`RESTRICTED`.
+// Default is "MODERN"
+func (*Config) SslProfile() string {
+	sslProfiles := []string{"COMPATIBLE", "MODERN", "RESTRICTED"}
+	inputProfile := os.Getenv("SSL_PROFILE")
+	result := "MODERN"
+	for _, profile := range sslProfiles {
+		if inputProfile == profile {
+			result = profile
+			break
+		}
+	}
+	return result
+}
+
 // listToContainsMap converts a list of strings
 // into a map that will be used for "contains" checking.
 func listToContainsMap(x []string) (result map[string]struct{}) {

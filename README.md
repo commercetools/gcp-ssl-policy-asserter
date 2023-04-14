@@ -1,3 +1,14 @@
+|![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Warning.svg/156px-Warning.svg.png) | This project is no longer used.
+|---|---|
+
+
+## ⚠️ Deprecation and Archive Notice
+
+This project is deprecated and it is not longer used, please consider using GCP [FrontenConfig](https://cloud.google.com/kubernetes-engine/docs/how-to/ingress-configuration#ssl) to enforce SSL policies on your GCP loadbalancers.
+
+The information on the deprection can be found in this [issue](https://github.com/commercetools/cloud-tools/issues/999) 
+
+
 This program asserts SSLPolicies for all HTTPSProxies in a
 Google load balancer project.
 
